@@ -1,0 +1,33 @@
+﻿<h1>All Users</h1>
+<div id="OwnersPage">
+    <h5>{{result}}</h5>
+
+
+
+    <form id="owner-form" ng-submit="addOwner()" class="form-inline padding">
+        <div class="form-group">
+            <input type="text" ng-model="newOwner" class="form-control table_item" name="newOwner" id="new-owner" placeholder="Enter new Owner" autofocus>
+
+        </div>
+        <input type="submit" id="submit" class="btn btn-primary" value="Add" />
+    </form>
+
+
+    <div>Total count: {{info.totalItems}}</div>
+    <table id="ownerTable" class="table table-stripped table-hover">
+        <tr>
+            <th class="tableTitle">Name</th>
+            <th class="tableTitle">Pets Count</th>
+        </tr>
+        <tbody ng-repeat="owner in pages[info.currentPage].owners">
+            <tr>
+                <td><a href="/Pets/{{owner.ownerId}}" ng-click="click(owner)">{{owner.ownerName}}</a></td>
+                <td>
+                    <div class="table_item ">{{owner.count}}</div>
+                    <div class="table_item "><button class="deleteButton btn btn-danger" ng-click="removeOwner(owner)">Delete</button></div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <pager total-pages="info.totalPages" current-page="info.currentPage" page-action="navigate(pageNumber)"></pager>
+</div>

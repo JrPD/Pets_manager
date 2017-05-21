@@ -1,0 +1,27 @@
+﻿	<h1>{{owner.ownerName}}'s pets</h1>
+<a href="/">Return to owners</a>
+<h5>{{result}}</h5>
+<form id="pets-form" ng-submit="addPet()" class="form-inline padding">
+	<div class="form-group">
+		<input type="text" ng-model="newPet" class="form-control table_item"
+			   name="newPet" id="new-pet" placeholder="Enter new {{owner.ownerName}}'s pet name" autofocus>
+
+	</div>
+	<input type="submit" id="submit" class="btn btn-primary" value="Add" />
+</form>
+<div>Total count: {{info.totalItems}}</div>
+<table id="PetsTable" class="table  table-hover">
+	<tr>
+		<th class="tableTitle">Pet name</th>
+	</tr>
+	<tbody ng-repeat="pet in pages[info.currentPage].pets">
+		<tr>
+			<td>
+				<div class="table_item ">{{pet.petName}}</div>
+				<div class="table_item "><button class="deleteButton btn btn-danger" ng-click="removePet(pet)">Delete</button></div>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<pager total-pages="info.totalPages" current-page="info.currentPage" page-action="navigate(pageNumber)"></pager>
+
