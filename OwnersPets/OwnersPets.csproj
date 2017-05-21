@@ -64,5 +64,8 @@
     <Folder Include="bin\" />
     <Folder Include="bower_components\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OwnersPetsRepository\OwnersPetsRepository.csproj" />
+  </ItemGroup>
 
 </Project>

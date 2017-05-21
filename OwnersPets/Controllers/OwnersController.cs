@@ -14,10 +14,6 @@ namespace OwnersPets.Controllers
     {
         private readonly IOwnerDataRepository _repo;
 
-        //public OwnersController()
-        //{
-        //    _repo = new OwnerDataRepository(new AppDbContext());
-        //}
         public OwnersController(IOwnerDataRepository repo)
         {
             _repo = repo;

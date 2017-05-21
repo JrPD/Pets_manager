@@ -25,7 +25,8 @@
 
 		function initialize() {
 			var queryArgs = {
-				pageNumber: service.paging.info.currentPage
+                pageNumber: service.paging.info.currentPage,
+                controller: "owners"
 			};
 
 			service.paging.info.currentPage = 1;
@@ -69,7 +70,8 @@
 
 		function load(pageNumber) {
 			var queryArgs = {
-				pageNumber: pageNumber
+                pageNumber: pageNumber,
+                controller: "owners"
 			};
 
 			return ownersSvc.query(queryArgs).$promise.then(
