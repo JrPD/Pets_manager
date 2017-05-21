@@ -6,7 +6,7 @@ using OwnersPets.Models;
 
 namespace OwnersPets.Models
 {
-	public interface IPetDataRepository
+	public interface IPetDataRepository:IDisposable
 	{
 		dynamic GetPetsByPages(int id, int pageSize, int pageNumber);
 

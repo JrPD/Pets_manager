@@ -18,7 +18,7 @@ namespace OwnersPets.Controllers
         //{
         //    _repo = new OwnerDataRepository(new AppDbContext());
         //}
-        public OwnersController(OwnerDataRepository repo)
+        public OwnersController(IOwnerDataRepository repo)
         {
             _repo = repo;
         }
@@ -74,13 +74,6 @@ namespace OwnersPets.Controllers
 			return Ok(owner);
 		}
 
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing)
-			{
-			_repo.Dispose();
-			}
-			base.Dispose(disposing);
-		}
+		
 	}
 }

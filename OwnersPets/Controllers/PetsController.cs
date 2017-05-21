@@ -12,11 +12,11 @@ namespace OwnersPets.Controllers
     [Route("api/[controller]")]
     public class PetsController : Controller
 	{
-		private PetDataRepository _repo;
+		private readonly IPetDataRepository _repo;
 
-		public PetsController()
+		public PetsController(IPetDataRepository repo)
 		{
-			_repo = new PetDataRepository(new AppDbContext());
+            _repo = repo;
 		}
 
 		// GET: api/Pets/5
@@ -67,14 +67,7 @@ namespace OwnersPets.Controllers
 			return Ok(pet);
 		}
 
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing)
-			{
-				_repo.Dispose();
-			}
-			base.Dispose(disposing);
-		}
+		
 
 	}
 }

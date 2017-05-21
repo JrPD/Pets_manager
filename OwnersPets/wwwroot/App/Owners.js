@@ -26,8 +26,28 @@ function OwnerCtrl($scope, $http, $route, $routeParams, $location, $q, getOwnerS
 		//if this is the first activation of the controller load the first page
 		if (getOwnerSvc.paging.info.currentPage === 0) {
 			navigate(1);
-		}
+        } else {
+            // reloadPetCount($scope);
+            updateTotal();
+        }
+
+    
 	}
+
+    //function reloadPetCount($scope) {
+    //    var owners = $scope.pages[$scope.info.currentPage].owners;
+    //    if (owners != undefined) {
+    //        for (var i = 0; i < owners.length; i++) {
+    //            $http.get(uri + owners[i].ownerId)
+    //                .then(function (response) {
+    //                    if (response.status = 201) {
+    //                        $scope.pages[$scope.info.currentPage].owners.indexOf(owners[i]).count = response.data.count;
+    //                    }
+    //                });
+    //        }
+        
+    //    }
+    //}
 
 	function navigate(pageNumber) {
 		$scope.status.busy = true;

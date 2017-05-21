@@ -5,6 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using OwnersPets.Models;
+using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace OwnersPets
 {
@@ -31,12 +33,18 @@ namespace OwnersPets
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<IOwnerDataRepository, OwnerDataRepository>();
+            services.AddScoped<IOwnerDataRepository, OwnerDataRepository>();
+            services.AddScoped<IPetDataRepository, PetDataRepository>();
 
             // Add framework services.
-            services.AddMvc();
+            services.AddMvc()
+              .AddJsonOptions(o =>
+               {
+                   o.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.None;
+                   o.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+               });
             services.AddEntityFrameworkSqlite().AddDbContext<AppDbContext>();
-
+            services.AddSingleton<IOwnerDataRepository, OwnerDataRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,7 +60,7 @@ namespace OwnersPets
             }
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
-;
+            ;
             app.UseMvc();
         }
     }

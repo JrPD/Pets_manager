@@ -66,14 +66,15 @@ namespace OwnersPets.Models
 			_db.SaveChanges();
 			return pet;
 		}
-	
-		public void Dispose()
-		{
-			_db.Dispose();
-		}
-		#endregion
+
+        public void Dispose()
+        {
+            _db.Dispose();
+            GC.SuppressFinalize(this);
+        }
+        #endregion
 
 
 
-	}
+    }
 }

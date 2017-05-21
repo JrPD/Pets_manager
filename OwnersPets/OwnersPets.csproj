@@ -45,7 +45,6 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="1.0.0-msbuild1-final" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="1.1.2" />
     <PackageReference Include="System.Net.Http" Version="4.1.0" />
-    <PackageReference Include="System.Web.Http" />
 
   </ItemGroup>
   <ItemGroup>

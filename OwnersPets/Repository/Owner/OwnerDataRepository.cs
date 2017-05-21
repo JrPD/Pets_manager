@@ -66,9 +66,11 @@ namespace OwnersPets.Models
 			{
 				_db.Pets.RemoveRange(owner.Pets);
 			}
-
-			_db.Owners.Remove(owner);
-			_db.SaveChanges();
+            if (owner != null)
+            {
+                _db.Owners.Remove(owner);
+            }
+            _db.SaveChanges();
 
 			return owner;
 		}
@@ -78,12 +80,12 @@ namespace OwnersPets.Models
 			_db.SaveChanges();
 		}
 
-		#endregion
+        #endregion
 
-
-		public void Dispose()
-		{
-			_db.Dispose();
-		}
+        public void Dispose()
+        {
+            _db.Dispose();
+        GC.SuppressFinalize(this);
+        }
 	}
 }

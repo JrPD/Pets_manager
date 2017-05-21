@@ -97,7 +97,7 @@ function PetCtrl($scope, $http, $routeParams, $q, getPetsSvc) {
 	}
 
 	function updateTotal() {
-		//$scope.pages[$scope.info.currentPage] = null;
+		$scope.pages[$scope.info.currentPage] = null;
 		navigate($scope.info.currentPage)
 	}
 }
