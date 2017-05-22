@@ -51,7 +51,7 @@ function OwnerCtrl($scope, $http, $route, $routeParams, $location, $q, getOwnerS
 
 	function navigate(pageNumber) {
 		$scope.status.busy = true;
-		$scope.status.message = "loading records";
+		$scope.result= "loading records";
 
 		getOwnerSvc.navigate(pageNumber)
 						.then(function () {

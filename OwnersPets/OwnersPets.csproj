@@ -4,13 +4,6 @@
     <TargetFramework>netcoreapp1.1</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="bin\Debug\**" />
-    <Content Remove="bin\Debug\**" />
-    <EmbeddedResource Remove="bin\Debug\**" />
-    <None Remove="bin\Debug\**" />
-  </ItemGroup>
-
 
 
   <ItemGroup>
@@ -61,7 +54,6 @@
     <None Include="wwwroot\Pets.html" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="bin\" />
     <Folder Include="bower_components\" />
   </ItemGroup>
   <ItemGroup>
