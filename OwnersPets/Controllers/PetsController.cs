@@ -1,36 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using System.Web.Http.Description;
 using OwnersPets.Models;
 using Newtonsoft.Json;
-using Microsoft.AspNetCore.Mvc;
+using OwnersPets.DAL;
+
 
 namespace OwnersPets.Controllers
 {
-    [Route("api/[controller]")]
-    public class PetsController : Controller
+	public class PetsController : ApiController
 	{
-		private readonly IPetDataRepository _repo;
+		private PetDataRepository _repo;
 
-		public PetsController(IPetDataRepository repo)
+		public PetsController()
 		{
-            _repo = repo;
+			_repo = new PetDataRepository(new AppDbContext());
 		}
 
 		// GET: api/Pets/5
-        [HttpGet("{id}")]
-        [Route("{pageSize:int}/{pageNumber:int}")]
-		public IActionResult GetPet(int id, int pageSize, int pageNumber)
+		[ResponseType(typeof(Pet))]
+		public IHttpActionResult GetPet(int id, int pageSize, int pageNumber)
 		{
 			var result = _repo.GetPetsByPages(id, pageSize, pageNumber);
 			return Ok(result);
 		}
 
 		// GET: api/Pets/5
-        [HttpGet("{id}")]
-		public IActionResult GetPet(int id)
+		[ResponseType(typeof(Pet))]
+		public IHttpActionResult GetPet(int id)
 		{
 			var pet = _repo.GetPetById(id);
 			if (pet == null)
@@ -43,8 +47,8 @@ namespace OwnersPets.Controllers
 
 		
 		// POST: api/Pets
-        [HttpPost]
-		public IActionResult PostPet([FromBody]Pet pet)
+		[ResponseType(typeof(Pet))]
+		public IHttpActionResult PostPet(Pet pet)
 		{
 			pet = _repo.PostPet(pet);
 			if (!ModelState.IsValid)
@@ -52,12 +56,12 @@ namespace OwnersPets.Controllers
 				return BadRequest(ModelState);
 			}
 
-			return Ok(pet);
+			return CreatedAtRoute("DefaultApi", new { id = pet.PetId }, pet);
 		}
 
 		// DELETE: api/Pets/5
-        [HttpDelete("{id}")]
-		public IActionResult DeletePet(int id)
+		[ResponseType(typeof(Pet))]
+		public IHttpActionResult DeletePet(int id)
 		{
 			var pet = _repo.DeletePet(id);
 			if (pet == null)
@@ -67,7 +71,14 @@ namespace OwnersPets.Controllers
 			return Ok(pet);
 		}
 
-		
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+				_repo.Dispose();
+			}
+			base.Dispose(disposing);
+		}
 
 	}
 }

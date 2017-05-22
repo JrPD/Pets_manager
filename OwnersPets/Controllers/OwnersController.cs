@@ -1,39 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web.Http;
+using System.Web.Http.Description;
 using OwnersPets.Models;
-using Microsoft.AspNetCore.Mvc;
+using OwnersPets.DAL;
 
 namespace OwnersPets.Controllers
 {
-    [Route("api/[controller]")]
-    public class OwnersController : Controller
-    {
+	public class OwnersController : ApiController
+	{
+		private OwnerDataRepository _repo;
 
-        private readonly IOwnerDataRepository _repo;
+		public OwnersController()
+		{
+			_repo = new OwnerDataRepository(new AppDbContext());
+		}
+		public OwnersController(OwnerDataRepository repo)
+		{
+			_repo = repo;
+		}
+		// GET: api/Owners
+		//[Route("{pageSize:int}/{pageNumber:int}/{orderBy:alpha?}")]
+		public IHttpActionResult GetOwners(int pageSize, int pageNumber)
+		{
+			var result = _repo.GetOwnersByPages(pageSize, pageNumber);
 
-        public OwnersController(IOwnerDataRepository repo)
-        {
-            _repo = repo;
-        }
-        // GET: api/Owners
-        [HttpGet]
-        [Route("{pageSize:int}/{pageNumber:int}")]
-        public IActionResult GetOwners(int pageSize, int pageNumber)
-        {
-            var result = _repo.GetOwnersByPages(pageSize, pageNumber);
-
-            return Ok(result);
-
-        }
+			return Ok(result);
+			
+		}
 
 
-        // GET: api/Owners/5
-        [HttpGet("{id}")]
-		public IActionResult GetOwner(int id)
+		// GET: api/Owners/5
+		[ResponseType(typeof(Owner))]
+		public IHttpActionResult GetOwner(int id)
 		{
 			var owner = _repo.GetOwnerById(id);
 
@@ -46,8 +51,8 @@ namespace OwnersPets.Controllers
 		}
 
 		// POST: api/Owners
-        [HttpPost]
-		public IActionResult PostOwner([FromBody]Owner owner)
+		[ResponseType(typeof(Owner))]
+		public IHttpActionResult PostOwner(Owner owner)
 		{
 			if (!ModelState.IsValid)
 			{
@@ -55,12 +60,12 @@ namespace OwnersPets.Controllers
 			}
 			owner = _repo.PostOwner(owner);
 	
-			return Ok(owner);
+			return CreatedAtRoute("DefaultApi", new { id = owner.OwnerId }, owner);
 		}
 
 		// DELETE: api/Owners/5
-        [HttpDelete("{id}")]
-		public IActionResult DeleteOwner(int id)
+		[ResponseType(typeof(Owner))]
+		public IHttpActionResult DeleteOwner(int id)
 		{
 			var owner = _repo.DeleteOwner(id);
 
@@ -71,6 +76,13 @@ namespace OwnersPets.Controllers
 			return Ok(owner);
 		}
 
-		
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+			_repo.Dispose();
+			}
+			base.Dispose(disposing);
+		}
 	}
 }

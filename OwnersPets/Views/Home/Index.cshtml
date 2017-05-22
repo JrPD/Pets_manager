@@ -1,0 +1,27 @@
+﻿<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/angular.js"></script>
+<script src="~/Scripts/angular-resource.js"></script>
+
+<script src="~/Scripts/angular-route.min.js"></script>
+<script src="~/Scripts/App/App.js"></script>
+<script src="~/Scripts/App/Owners.js"></script>
+<script src="~/Scripts/App/Pets.js"></script>
+<script src="~/Scripts/App/getOwnerSvc.js"></script>
+<script src="~/Scripts/App/getPetSvc.js"></script>
+<script src="~/Scripts/App/pager.js"></script>
+
+<link href="~/Content/bootstrap.min.css" rel="stylesheet">
+<script src="~/Scripts/bootstrap.js" ></script>
+
+
+
+<script type="text/javascript">
+	angular.element(document.getElementsByTagName('head')).append(angular.element('<base href="' + window.location.pathname + '" />'));
+</script>
+
+<div class="row" ng-app="OwnersPets">
+	<div id="petsView">
+		<div ng-view></div>
+	</div>
+</div>
+
